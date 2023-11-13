@@ -1,14 +1,36 @@
-# locust-flask-test
+# Locust-Flask Test
+
 A Toy application to learn how to use Locust and Flask.
 
-1. Run on of the Python Flask Web Applications.
+## Getting Started
 
-   ```python webapp.py```
-   
-   ```python microservice_is_prime.py```
+### Dependencies
 
-   ```python microservice_generate_random.py```
+All the required dependencies are in the `requirements.txt` file.
 
-2. Run the Locust script to generate workload.
+You can install them with `pip` as follows:
 
-   ```locust```
+```
+pip install -r requirements.txt
+```
+
+### Executing program
+
+
+* Run **one** of the Python Flask Web Applications.
+
+   ```
+   python webapp.py
+   python microservice_is_prime.py
+   python microservice_generate_random.py
+   ```
+
+* Run the Locust script to generate workload.
+
+   ```
+   locust
+   ```
+
+## Authors
+
+* [Roberto Pizziol](https://github.com/rpizziol)
