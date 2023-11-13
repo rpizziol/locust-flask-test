@@ -25,7 +25,7 @@ def is_prime(number):
 app = Flask(__name__)
 
 
-@app.route('/random-is-prime')
+@app.route('/')
 def random_is_prime():
     random_number = random.randint(1, 1000000)
     is_prime_result = is_prime(random_number)

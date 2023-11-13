@@ -3,7 +3,8 @@ from locust import HttpUser, task, events, constant
 
 
 class MyUser(HttpUser):
-    base_url = "http://192.168.1.100:5000"  # URL of the web application
+    #base_url = "http://192.168.1.100:5000"  # URL of the web application
+    base_url = "http://0.0.0.0:5001"  # URL of the web application
 
     wait_time = random.randint(100, 500)  # Simulate random wait time between requests
 
