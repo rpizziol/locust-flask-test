@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-prime-checker-app
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: container-2 # Specify the hostname of the container
+  replicas: 1 # Number of pods to run
+  selector:
+    matchLabels:
+      app: my-prime-checker-app
+  template:
+    metadata:
+      labels:
+        app: my-prime-checker-app
+    spec:
+      containers:
+      - name: my-prime-checker-app-container
+        image: rpizziol/my-prime-checker-app:latest
+        ports:
+        - containerPort: 5001
+
+
