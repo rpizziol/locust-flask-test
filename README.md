@@ -1,6 +1,6 @@
 # Locust-Flask Test
 
-A Toy application to learn how to use Locust and Flask.
+A Toy application to learn how to use Locust, Flask and Google Cloud.
 
 ## Getting Started
 
