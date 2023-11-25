@@ -1,22 +1,13 @@
-import locust
+import random
+from locust import HttpUser, task, events, constant
 
 
-class MyLocust(locust.HttpUser):
-    # Specify the host directly in the locustfile.py
-    host = "http://<your_target_ip_address>"  # Replace with your target IP address
+class MyUser(HttpUser):
 
-    task_set = locust.TaskSet()
+    host = "http://34.118.161.222:5001"
 
-    # Set the number of users (-u)
-    task_set.users = 2500
+    # wait_time = random.randint(100, 500)  # Simulate random wait time between requests
 
-    # Set the spawn rate (-r)
-    task_set.spawn_rate = 10
-
-    # Set the weight (--weight)
-    # task_set.weight = 2
-
-    @task_set.task
-    def swarm(self):
-        # Simulate a user visiting the target IP address
+    @task
+    def index_page(self):
         self.client.get("/")

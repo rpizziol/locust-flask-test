@@ -29,10 +29,10 @@ pip install -r requirements.txt
    ./gcloud/start.sh
    ```
 
-* Edit `locust/locustfile.py` to change the swarm parameters and then run it with:
+* Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run it with:
 
    ```
-   locust -f ./locust/locustfile.py --headless
+   locust -f locustfile.py -u <MaxUsers> -r <SwarmRate> --headless
    ```
   
 
