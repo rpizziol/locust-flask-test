@@ -16,6 +16,11 @@ pip install -r requirements.txt
 
 ### Executing program
 
+* Set up a GCloud cluster
+   ```
+   python gcloud_script.py  [new/del/kub] <cluster_name/file_name>
+   ```
+
 
 * Run **one** of the Python Flask Web Applications.
 

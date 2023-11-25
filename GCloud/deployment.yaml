@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: my-prime-checker-app
 spec:
-  nodeSelector:
-    kubernetes.io/hostname: container-2 # Specify the hostname of the container
   replicas: 1 # Number of pods to run
   selector:
     matchLabels:
@@ -19,5 +17,4 @@ spec:
         image: rpizziol/my-prime-checker-app:latest
         ports:
         - containerPort: 5001
-
 
