@@ -29,13 +29,12 @@ pip install -r requirements.txt
    ./gcloud/start.sh
    ```
 
-* Run the Locust script to generate workload.
+* Edit `locust/locustfile.py` to change the swarm parameters and then run it with:
 
    ```
-   cd locust; locust
+   locust -f ./locust/locustfile.py --headless
    ```
   
-   From the locust GUI (go to http://0.0.0.0:8089 ) select *Number of users*, *Spawn rate* and the *Host* (e.g., http://34.118.161.222:5001/, see Google Cloud for the assigned exposed url).
 
 ## Authors
 

@@ -1,52 +1,22 @@
-import random
-from locust import HttpUser, task, events, constant
+import locust
 
 
-class MyUser(HttpUser):
-    
-    # base_url = "http://34.118.179.47:5001/"
+class MyLocust(locust.HttpUser):
+    # Specify the host directly in the locustfile.py
+    host = "http://<your_target_ip_address>"  # Replace with your target IP address
 
-    # wait_time = random.randint(100, 500)  # Simulate random wait time between requests
+    task_set = locust.TaskSet()
 
-    @task
-    def index_page(self):
+    # Set the number of users (-u)
+    task_set.users = 2500
+
+    # Set the spawn rate (-r)
+    task_set.spawn_rate = 10
+
+    # Set the weight (--weight)
+    # task_set.weight = 2
+
+    @task_set.task
+    def swarm(self):
+        # Simulate a user visiting the target IP address
         self.client.get("/")
-    #
-    # @task(weight=2)
-    # def product_page(self):
-    #     self.client.get("/product")
-    #
-    # @task(weight=1)
-    # def checkout_page(self):
-    #     self.client.get("/checkout")
-
-
-# # Maximum number of users
-# max_users = 100
-#
-# # Rate at which new users are created (per second)
-# spawn_rate = 10
-#
-# # Total run time of the test in seconds
-# run_time = 300
-#
-#
-# # Configure the load test to start with 10 users and gradually increase to the maximum number of users
-# def on_start(environment):
-#     environment.user_count += 1
-#     if environment.user_count < max_users:
-#         events.locust_user_spawned.fire(environment, None, 1)
-#     else:
-#         timer = events.timer.Timer(spawn_rate, environment.user_count)
-#         timer.add_listener(on_timer_fire)
-#         timer.start()
-#
-#
-# def on_timer_fire(timer):
-#     if timer.remaining_time <= 0:
-#         timer.stop()
-#         return
-#     if timer._current_count < max_users:
-#         events.locust_user_spawned.fire(timer.environment, None, 1)
-#         timer._current_count += 1
-#     timer.reschedule()
