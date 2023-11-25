@@ -1,8 +1,16 @@
 # Locust-Flask Test
 
-A Toy application to learn how to use Locust, Flask and Google Cloud.
+A Toy application to learn how to use **Locust**, **Flask**, **Google Cloud** and **Kubernetes**.
 
 ## Getting Started
+
+The structure of this project is the following:
+
+* `gcloud`: a series of scripts and `.yaml` files used to automatically initialize the Kubernetes cluster, deploy a web application and delete the cluster.
+
+* `locust`: the `locustfile.py` used to swarm the webapp with users.
+
+* `webapps`: some example *Flask* webapps (the default one used for this project is `microservice_is_prime.py`) and a `Dockerfile`.
 
 ### Dependencies
 
@@ -16,25 +24,18 @@ pip install -r requirements.txt
 
 ### Executing program
 
-* Set up a GCloud cluster
+* Set up a GCloud cluster with the `my-prime-checker-app` webapp running
    ```
-   python gcloud_script.py  [new/del/kub] <cluster_name/file_name>
-   ```
-
-
-* Run **one** of the Python Flask Web Applications.
-
-   ```
-   python webapp.py
-   python microservice_is_prime.py
-   python microservice_generate_random.py
+   ./gcloud/start.sh
    ```
 
 * Run the Locust script to generate workload.
 
    ```
-   locust
+   cd locust; locust
    ```
+  
+   From the locust GUI (go to http://0.0.0.0:8089 ) select *Number of users*, *Spawn rate* and the *Host* (e.g., http://34.118.161.222:5001/, see Google Cloud for the assigned exposed url).
 
 ## Authors
 

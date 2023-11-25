@@ -3,24 +3,22 @@ from locust import HttpUser, task, events, constant
 
 
 class MyUser(HttpUser):
-    #base_url = "http://192.168.1.100:5000"  # URL of the web application
-    #base_url = "http://0.0.0.0:5001"  # URL of the web application
     
-    base_url = "http://34.118.179.47:5001/"
+    # base_url = "http://34.118.179.47:5001/"
 
-    wait_time = random.randint(100, 500)  # Simulate random wait time between requests
+    # wait_time = random.randint(100, 500)  # Simulate random wait time between requests
 
     @task
     def index_page(self):
         self.client.get("/")
-
-    @task(weight=2)
-    def product_page(self):
-        self.client.get("/product")
-
-    @task(weight=1)
-    def checkout_page(self):
-        self.client.get("/checkout")
+    #
+    # @task(weight=2)
+    # def product_page(self):
+    #     self.client.get("/product")
+    #
+    # @task(weight=1)
+    # def checkout_page(self):
+    #     self.client.get("/checkout")
 
 
 # # Maximum number of users
