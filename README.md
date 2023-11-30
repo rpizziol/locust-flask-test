@@ -2,7 +2,7 @@
 
 A Toy application to learn how to use **Locust**, **Flask**, **Google Cloud** and **Kubernetes**.
 
-## Getting Started
+## Project Structure
 
 The structure of this project is the following:
 
@@ -22,19 +22,28 @@ You can install them with `pip` as follows:
 pip install -r requirements.txt
 ```
 
-### Executing program
+### Execution
 
-* Set up a GCloud cluster with the `my-prime-checker-app` webapp running
+1. Set up a GCloud cluster with the `my-prime-checker-app` webapp running
    ```
    ./gcloud/start.sh
    ```
+  This should output also the host url.
 
-* Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run it with:
+2. Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run the script `run_locust.sh`:
 
    ```
-   locust -f locustfile.py -u <MaxUsers> -r <SwarmRate> --headless
+   ./run_locust <SwarmRate> <MaxUsers>
    ```
   
+3. Kill the kubernetes cluster with (don't forget to press Enter to continue):
+
+   ```
+   python ./gcloud/gcloud_script.py del
+   ```
+  
+### To Do
+* Edit the locust file with the assigned host url in step 1
 
 ## Authors
 
