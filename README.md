@@ -46,7 +46,7 @@ pip install -r requirements.txt
    ```
   
 ### To Do
-* Edit the locust file with the assigned host url in step 1
+* Edit the Locust file with the assigned host url in step 1
 
 ## Authors
 
