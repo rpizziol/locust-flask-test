@@ -1,27 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment # To allow multiple pods
 metadata:
-  name: my-prime-checker-app
+  name: simpleapp
 spec:
   replicas: 1 # Number of pods to run
   selector:
     matchLabels:
-      app: my-prime-checker-app
+      app: simpleapp
   template:
     metadata:
       labels:
-        app: my-prime-checker-app
+        app: simpleapp
     spec:
       containers:
-      - name: my-prime-checker-app-container
-        image: rpizziol/my-prime-checker-app:latest
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m" # Recommended to use the m notation
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+      - name: simpleapp-container
+        image: bistrulli/simpleapp
         ports:
-        - containerPort: 5001
+        - containerPort: 80
 
