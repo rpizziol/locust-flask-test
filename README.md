@@ -10,7 +10,7 @@ The structure of this project is the following:
 
 * `locust`: the `locustfile.py` used to swarm the webapp with users.
 
-* `webapps`: some example *Flask* webapps (the default one used for this project is `microservice_is_prime.py`) and a `Dockerfile`.
+* `webapps`: some example *Flask* webapps and a `Dockerfile` that can be used for this project. The current version of the project uses [simpleapp](https://hub.docker.com/r/bistrulli/simpleapp).
 
 ### Dependencies
 
@@ -24,11 +24,14 @@ pip install -r requirements.txt
 
 ### Execution
 
-1. Set up a GCloud cluster with the `my-prime-checker-app` webapp running
+1. Set up a GCloud cluster with the chosen webapp running
    ```
    ./gcloud/start.sh
    ```
-  This should output also the host url.
+   This should output also the host url. If not, run manually:
+   ```
+   kubectl get service simpleapp-service
+   ```
 
 2. Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run the script `run_locust.sh`:
 
@@ -36,10 +39,10 @@ pip install -r requirements.txt
    ./run_locust <SwarmRate> <MaxUsers>
    ```
   
-3. Kill the kubernetes cluster with (don't forget to press Enter to continue):
+3. Kill the kubernetes cluster with the script (don't forget to press Enter to continue):
 
    ```
-   python ./gcloud/gcloud_script.py del
+   ./gcloud/close.sh
    ```
   
 ### To Do
