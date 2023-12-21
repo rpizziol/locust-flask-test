@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: deployedapp-service
   labels:
-    app: simpleapp
+    app: my-prime-checker-app
 spec:
   selector:
-    app: simpleapp
+    app: my-prime-checker-app
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 80
+    port: 5001
+    targetPort: 5001
   type: LoadBalancer
 

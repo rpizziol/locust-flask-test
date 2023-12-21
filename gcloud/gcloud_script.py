@@ -25,8 +25,8 @@ def kubectl_apply(filename):
 
 
 def run_kubectl():
-    kubectl_apply('simpleapp/deployment.yaml')
-    kubectl_apply('simpleapp/service.yaml')
+    kubectl_apply('deployment.yaml')
+    kubectl_apply('service.yaml')
 
 
 if __name__ == '__main__':
