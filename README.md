@@ -36,7 +36,7 @@ pip install -r requirements.txt
 2. Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run the script `run_locust.sh`:
 
    ```
-   ./run_locust <SwarmRate> <MaxUsers>
+   ./locust/run_locust.sh <SwarmRate> <MaxUsers>
    ```
   
 3. Kill the kubernetes cluster with the script (don't forget to press Enter to continue):

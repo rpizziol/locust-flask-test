@@ -13,4 +13,4 @@ echo +++ TASK FINISHED +++
 aplay /usr/share/sounds/sound-icons/at &> /dev/null
 
 # Print the assigned IP (required then for locust)
-kubectl get service simpleapp-service
+kubectl get service deployedapp-service
