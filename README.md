@@ -32,14 +32,20 @@ pip install -r requirements.txt
    ```
    kubectl get service simpleapp-service
    ```
+   
+2. Check the endpoint assigned by GoogleCloud (the `LoadBalancer Ingress:` of the following command):
 
-2. Edit `locust/locustfile.py` to change the host url (check on Google Cloud. E.g., `host = "http://34.118.161.222:5001"` ) and then run the script `run_locust.sh`:
+   ```
+   kubectl describe services deployedapp-service
+   ```
+
+3. Edit `locust/locustfile.py` to change the host url obtained in step 2 (E.g., `host = "http://34.118.161.222:5001"` ) and run the script `run_locust.sh`:
 
    ```
    ./locust/run_locust.sh <SwarmRate> <MaxUsers>
    ```
   
-3. Kill the kubernetes cluster with the script (don't forget to press Enter to continue):
+4. Kill the kubernetes cluster with the script (don't forget to press Enter to continue):
 
    ```
    ./gcloud/close.sh
