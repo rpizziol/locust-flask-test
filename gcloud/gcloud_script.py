@@ -2,6 +2,7 @@ import subprocess
 import sys
 
 
+# gcloud container clusters create cluster-1 --zone=northamerica-northeast1-a --machine-type=c2-standard-8 --num-nodes=1
 def create_cluster(cluster_name, zone, machine_type, num_nodes):
     command = ['gcloud', 'container', 'clusters', 'create', cluster_name]
     command.extend(['--zone', zone])
@@ -11,13 +12,14 @@ def create_cluster(cluster_name, zone, machine_type, num_nodes):
     subprocess.run(command)
 
 
+# gcloud container clusters delete cluster-1 --zone=northamerica-northeast1-a
 def delete_cluster(cluster_name, zone):
     command = ['gcloud', 'container', 'clusters', 'delete', cluster_name]
     command.extend(['--zone', zone])
 
     subprocess.run(command)
 
-
+# kubectl apply -f filename.yaml
 def kubectl_apply(filename):
     command = ['kubectl', 'apply']
     command.extend(['-f', filename])
@@ -25,7 +27,9 @@ def kubectl_apply(filename):
 
 
 def run_kubectl():
+    # kubectl apply -f deployment.yaml
     kubectl_apply('deployment.yaml')
+    # kubectl apply -f service.yaml
     kubectl_apply('service.yaml')
 
 
