@@ -88,10 +88,10 @@ out
 gen
 
 # Prometheus
-./prometheus/console_libraries/
-./prometheus/consoles/
-./prometheus/data/
-./prometheus/LICENSE
-./prometheus/NOTICE
-./prometheus/prometheus
-./prometheus/promtool
+prometheus/console_libraries/
+prometheus/consoles/
+prometheus/data/
+prometheus/LICENSE
+prometheus/NOTICE
+prometheus/prometheus
+prometheus/promtool
