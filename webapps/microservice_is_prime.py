@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
+import requests
 import random
+from py_zipkin.zipkin import zipkin_span, create_http_headers_for_new_span, ZipkinAttrs
 
 
 def is_prime_recursive(number, divisor):
@@ -25,12 +27,31 @@ def is_prime(number):
 app = Flask(__name__)
 
 
+def http_transport(encoded_span):
+    """
+    The transport function to send spans to Zipkin server.
+    """
+    requests.post(
+        "http://localhost:9411/api/v2/spans",
+        data=encoded_span,
+        headers={'Content-Type': 'application/x-thrift'},
+    )
+
+
 @app.route('/')
+@zipkin_span(service_name='my_flask_service', span_name='home_page')
 def random_is_prime():
-    random_number = random.randint(1, 1000000)
-    is_prime_result = is_prime(random_number)
-    response = {'random_number': random_number, 'is_prime': is_prime_result}
-    return jsonify(response)
+    with zipkin_span(
+            service_name='my_flask_service',
+            span_name='home_page',
+            transport_handler=http_transport,
+            port=5000,
+            sample_rate=100,
+    ):
+        random_number = random.randint(1, 1000000)
+        is_prime_result = is_prime(random_number)
+        response = {'random_number': random_number, 'is_prime': is_prime_result}
+        return jsonify(response)
 
 
 if __name__ == '__main__':
