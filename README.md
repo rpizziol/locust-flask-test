@@ -50,14 +50,6 @@ pip install -r requirements.txt
    ```
    ./gcloud/close.sh
    ```
-   
-### Notes
-To build and deploy the Docker Image, navigate to the `webapps` folder and run:
-
-   ```
-   docker build -t rpizziol/my-prime-checker-app .
-   docker push rpizziol/my-prime-checker-app
-   ```
   
 ### To Do
 * Edit the Locust file with the assigned host url in step 1
