@@ -19,6 +19,7 @@ def delete_cluster(cluster_name, zone):
 
     subprocess.run(command)
 
+
 # kubectl apply -f filename.yaml
 def kubectl_apply(filename):
     command = ['kubectl', 'apply']
