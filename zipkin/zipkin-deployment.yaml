@@ -1,0 +1,31 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipkin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipkin
+  template:
+    metadata:
+      labels:
+        app: zipkin
+    spec:
+      containers:
+      - name: zipkin
+        image: openzipkin/zipkin:latest
+        ports:
+        - containerPort: 9411
+          name: http
+        # In-memory storage (simplest option)
+        # ...
+        resources:
+          requests:
+            cpu: 100m # Request 100 millicores
+            memory: 256Mi # Request 256 mebibytes
+          limits:
+            cpu: 500m # Limit to 500 millicores
+            memory: 1Gi # Limit to 1 gigabyte
+

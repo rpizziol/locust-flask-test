@@ -1,0 +1,15 @@
+# Service (optional, assumes cluster IP exposure)
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin-service
+spec:
+  selector:
+    app: zipkin
+  type: LoadBalancer # Or "ClusterIP" to access within the cluster
+  ports:
+  - protocol: TCP
+    port: 9411
+    targetPort: 9411
+    name: http
+
