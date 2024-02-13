@@ -2,6 +2,9 @@ from flask import Flask, jsonify
 import requests
 import random
 from py_zipkin.zipkin import zipkin_span, create_http_headers_for_new_span, ZipkinAttrs
+import os
+
+zipkin_url = os.environ.get("ZIPKIN_URL", "http://localhost:9411") # "http://localhost:9411" is the default value
 
 
 def is_prime_recursive(number, divisor):
@@ -32,7 +35,7 @@ def http_transport(encoded_span):
     The transport function to send spans to Zipkin server.
     """
     requests.post(
-        "http://localhost:9411/api/v2/spans",
+        zipkin_url + "/api/v2/spans", # Default is "http://localhost:9411/api/v2/spans",
         data=encoded_span,
         headers={'Content-Type': 'application/x-thrift'},
     )
