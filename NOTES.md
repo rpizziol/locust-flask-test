@@ -33,8 +33,26 @@ To avoid having to use `sudo` for every `docker` command, add your user to the `
    ```
    docker run hello-world
    ```
-   
-## Random notes
+ 
+
+# Google Cloud
+## Remote access to a pod
+1. Check the pod name:
+```
+kubectl get pods
+```
+2. Access remotely to the pod:
+```
+kubectl exec -it <pod-name> -- /bin/bash
+```
+Note that installed software is not permanent. Remember also to run `apt update` before installing anything.
+In order to install `ping`, run:
+```
+apt install iputils-ping
+```
+
+  
+# Random notes
 ```
 gcloud compute addresses create rpizziol-microservice-ip --project=my-microservice-test-project --network-tier=STANDARD --region=northamerica-northeast1 && gcloud compute instances add-access-config gke-cluster-1-default-pool-0a736462-qvxq --project=my-microservice-test-project --zone=northamerica-northeast1-a --address=IP_OF_THE_NEWLY_CREATED_STATIC_ADDRESS --network-tier=STANDARD
 ```
