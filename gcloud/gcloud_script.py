@@ -33,6 +33,12 @@ def run_kubectl():
     # kubectl apply -f service.yaml
     kubectl_apply('service.yaml')
 
+def deploy_zipkin():
+    # kubectl apply -f deployment.yaml
+    kubectl_apply('./zipkin/zipkin-deployment.yaml')
+    # kubectl apply -f service.yaml
+    kubectl_apply('./zipkin/zipkin-service.yaml')
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -54,8 +60,9 @@ if __name__ == '__main__':
         # Delete the cluster
         delete_cluster(cluster_name, zone)
     elif action == "kub":
-        # Deploy the webapp and run the service
+        # Deploy the webapp, run the service
         run_kubectl()
+        deploy_zipkin()
     else:
         print("Invalid action:", action)
         print("Usage: gcloud_script.py  [new/kub/del]")

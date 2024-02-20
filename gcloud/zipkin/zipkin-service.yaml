@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     app: zipkin
-  type: LoadBalancer # Or "ClusterIP" to access within the cluster
+  type: LoadBalancer #ClusterIP #" to access within the cluster
   ports:
   - protocol: TCP
     port: 9411
