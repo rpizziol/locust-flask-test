@@ -3,8 +3,8 @@
 To build and deploy the Docker Image, navigate to the `webapps` folder and run:
 
    ```
-   docker build -t rpizziol/my-prime-checker-app .
-   docker push rpizziol/my-prime-checker-app
+   docker build -t rpizziol/busy-waiting-webapp .
+   docker push rpizziol/busy-waiting-webapp
    ```
 
 ### Authentication error
