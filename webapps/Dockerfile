@@ -5,9 +5,9 @@ WORKDIR /app
 COPY ../requirements.txt /app
 RUN pip install -r requirements.txt
 
-COPY microservice_is_prime.py ./
+COPY busy_waiting_webapp.py ./
 
 EXPOSE 5001
 
-CMD ["python", "microservice_is_prime.py"]
+CMD ["python", "busy_waiting_webapp.py"]
 
