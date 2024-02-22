@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment # To allow multiple pods
 metadata:
-  name: my-prime-checker-app
+  name: busy-waiting-webapp
 spec:
   replicas: 1 # Number of pods to run
   selector:
     matchLabels:
-      app: my-prime-checker-app
+      app: busy-waiting-webapp
   template:
     metadata:
       labels:
-        app: my-prime-checker-app
+        app: busy-waiting-webapp
     spec:
       containers:
-      - name: my-prime-checker-app-container
-        image: rpizziol/my-prime-checker-app:latest
+      - name: busy-waiting-webapp-container
+        image: rpizziol/busy-waiting-webapp:latest
         resources:
           requests:
             memory: "64Mi"

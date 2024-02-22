@@ -4,7 +4,7 @@ import csv
 # https://zipkin.io/zipkin-api/#/
 
 # Change the ip accordingly after having deployed Zipkin
-zipkin_ip = "http://34.152.1.37"
+zipkin_ip = "http://34.118.177.5"
 
 # Replace this URL with your Zipkin's API endpoint
 zipkin_url = zipkin_ip + ":9411/api/v2/traces?limit=100"  # Change limit as required
@@ -19,7 +19,7 @@ csv_file = "./traces/zipkin_traces.csv"
 # Define the headers for the CSV file
 # headers = ['traceId', 'id', 'parentId', 'name', 'service', 'timestamp', 'duration' 'spanKind']
 
-headers = ['traceId', 'name', 'service', 'duration']
+headers = ['traceId', 'name', 'service', 'timestamp', 'duration']
 
 # Open the CSV file and write the headers and trace data
 with open(csv_file, mode='w', newline='') as file:
@@ -36,8 +36,8 @@ with open(csv_file, mode='w', newline='') as file:
                 # 'id': span.get('id'),
                 # 'parentId': span.get('parentId', ''),
                 'name': span.get('name'),
-                # 'timestamp': span.get('timestamp', ''),
                 'service': span.get('localEndpoint', {}).get('serviceName', ''),
+                'timestamp': span.get('timestamp', ''),
                 'duration': span.get('duration', '')
                 # 'spanKind': span.get('kind', '')
             }

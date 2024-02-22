@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: deployedapp-service
   labels:
-    app: my-prime-checker-app
+    app: busy-waiting-webapp
 spec:
   selector:
-    app: my-prime-checker-app
+    app: busy-waiting-webapp
   ports:
   - protocol: TCP
     port: 5001

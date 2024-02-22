@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment # To allow multiple pods
+metadata:
+  name: busy-waiting-webapp
+spec:
+  replicas: 1 # Number of pods to run
+  selector:
+    matchLabels:
+      app: busy-waiting-webapp
+  template:
+    metadata:
+      labels:
+        app: busy-waiting-webapp
+    spec:
+      containers:
+      - name: busy-waiting-webapp-container
+        image: rpizziol/busy-waiting-webapp:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m" # Recommended to use the m notation
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5001
+
