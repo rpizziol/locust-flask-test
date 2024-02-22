@@ -35,9 +35,9 @@ def run_kubectl():
 
 def deploy_zipkin():
     # kubectl apply -f deployment.yaml
-    kubectl_apply('./zipkin/zipkin-deployment.yaml')
+    kubectl_apply('../zipkin/zipkin-deployment.yaml')
     # kubectl apply -f service.yaml
-    kubectl_apply('./zipkin/zipkin-service.yaml')
+    kubectl_apply('../zipkin/zipkin-service.yaml')
 
 
 if __name__ == '__main__':
