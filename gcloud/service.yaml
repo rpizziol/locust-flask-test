@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: deployedapp-service
+  name: busy-waiting-webapp-service
   labels:
     app: busy-waiting-webapp
 spec:

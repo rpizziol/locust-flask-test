@@ -23,8 +23,8 @@ def http_transport(encoded_span):
     """
     The transport function to send spans to Zipkin server.
     """
-    #zipkin_url = "http://zipkin-service:9411/api/v2/spans"
-    zipkin_url = "http://localhost:9411/api/v2/spans"
+    zipkin_url = "http://zipkin-service:9411/api/v2/spans"
+    #zipkin_url = "http://localhost:9411/api/v2/spans"
     requests.post(
         zipkin_url,
         data=encoded_span,
@@ -33,13 +33,13 @@ def http_transport(encoded_span):
 
 
 @app.route('/')
-@zipkin_span(service_name='my_flask_service', span_name='home_page')
+@zipkin_span(service_name='my_flask_service', span_name='home_page', port=5001)
 def random_is_prime():
     with zipkin_span(
             service_name='my_flask_service',
             span_name='home_page',
             transport_handler=http_transport,
-            port=5000,
+            port=5001,
             sample_rate=100,
     ):
         # Generate a lock time exponentially distributed with mean 100 ms

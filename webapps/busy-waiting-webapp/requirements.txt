@@ -1,6 +1,10 @@
 Flask~=2.0
 Werkzeug~=2.0
 
+locust~=2.18.1
 requests~=2.31.0
 
 py_zipkin
+
+psutil~=5.9.7
+numpy~=1.26.4
