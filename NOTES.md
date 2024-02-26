@@ -51,7 +51,19 @@ In order to install `ping`, run:
 apt install iputils-ping
 ```
 
-  
+## Horizontal scaling
+Check current number of replicas of the `busy-waiting-webapp` deployment:
+
+```
+kubectl get deployment busy-waiting-webapp -o jsonpath='{.spec.replicas}'
+```
+
+Change number of replicas of the `busy-waiting-webapp` deployment:
+```
+kubectl scale deployment busy-waiting-webapp --replicas=2
+```
+
+
 # Random notes
 ```
 gcloud compute addresses create rpizziol-microservice-ip --project=my-microservice-test-project --network-tier=STANDARD --region=northamerica-northeast1 && gcloud compute instances add-access-config gke-cluster-1-default-pool-0a736462-qvxq --project=my-microservice-test-project --zone=northamerica-northeast1-a --address=IP_OF_THE_NEWLY_CREATED_STATIC_ADDRESS --network-tier=STANDARD
