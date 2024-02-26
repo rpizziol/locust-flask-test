@@ -65,15 +65,15 @@ def kolmogorov_smirnov(data):
     print(f"KS test statistic: {ks_stat}, p-value: {ks_p_value}")
 
 
-# Export traces to CSV file
+# Export traces to CSV file<
 out_file = "./traces/zipkin_traces.csv"
 export_traces_to_csv("http://34.118.147.109", 1000, out_file)
 
 # Calculate average latency
 df = pd.read_csv(out_file)
 latency = df['duration']
-avg_latency = np.mean(latency)  # .mean()
-print(f"The average latency is: {avg_latency}")
+avg_latency = np.mean(latency)  # in microseconds
+print(f"The average latency is: {avg_latency/1000} ms")
 
 # Check if it's exponential
 latency_array = latency.to_numpy()

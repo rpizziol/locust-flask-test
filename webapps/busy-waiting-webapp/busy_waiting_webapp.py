@@ -12,7 +12,7 @@ def busy_wait(lock_time):
     while now - start < lock_time:
         now = pu.cpu_times().user * 1000  # Update current user time
 
-    return now - start # Return elapsed time
+    return now - start  # Return elapsed time
     # print(str(lock_time) + " ms passed")
 
 
@@ -24,7 +24,7 @@ def http_transport(encoded_span):
     The transport function to send spans to Zipkin server.
     """
     zipkin_url = "http://zipkin-service:9411/api/v2/spans"
-    #zipkin_url = "http://localhost:9411/api/v2/spans"
+    # zipkin_url = "http://localhost:9411/api/v2/spans"
     requests.post(
         zipkin_url,
         data=encoded_span,
@@ -33,8 +33,10 @@ def http_transport(encoded_span):
 
 
 @app.route('/')
-@zipkin_span(service_name='my_flask_service', span_name='home_page', port=5001)
-def random_is_prime():
+# @zipkin_span(service_name='my_flask_service', span_name='home_page', port=5001)
+def busy_lock_homepage():
+    # Generate a lock time exponentially distributed with mean 100 ms
+    lock_time = np.random.exponential(100)  # in ms
     with zipkin_span(
             service_name='my_flask_service',
             span_name='home_page',
@@ -42,11 +44,9 @@ def random_is_prime():
             port=5001,
             sample_rate=100,
     ):
-        # Generate a lock time exponentially distributed with mean 100 ms
-        lock_time = np.random.exponential(100) # in ms
         elapsed_time = busy_wait(lock_time)
-        response = {'lock_time': lock_time, 'elapsed_time': elapsed_time}
-        return jsonify(response)
+    response = {'lock_time': lock_time, 'elapsed_time': elapsed_time}
+    return jsonify(response)
 
 
 if __name__ == '__main__':
