@@ -16,6 +16,7 @@ def create_cluster(cluster_name, zone, machine_type, num_nodes):
 def delete_cluster(cluster_name, zone):
     command = ['gcloud', 'container', 'clusters', 'delete', cluster_name]
     command.extend(['--zone', zone])
+    command.extend(['--quiet']) # To avoid "Do you want to continue (Y/n)?"
 
     subprocess.run(command)
 
