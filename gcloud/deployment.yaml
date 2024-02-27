@@ -18,10 +18,10 @@ spec:
         resources:
           requests:
             memory: "64Mi"
-            cpu: "250m" # Recommended to use the m notation
+            cpu: "1000m" # Recommen500mded to use the m notation
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "1000m"
         ports:
         - containerPort: 5001
 

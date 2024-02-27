@@ -5,15 +5,18 @@ import psutil as pu
 import numpy as np
 
 
+def get_current_time_in_ms():
+    return pu.cpu_times().user + pu.cpu_times().system * 1000
+
+
 def busy_wait(lock_time):
-    start = pu.cpu_times().user * 1000  # Start user time in milliseconds
-    now = pu.cpu_times().user * 1000  # Current user time in milliseconds
+    start = get_current_time_in_ms()  # Start user time
+    now = get_current_time_in_ms()  # Current user time
 
     while now - start < lock_time:
-        now = pu.cpu_times().user * 1000  # Update current user time
+        now = get_current_time_in_ms()  # Update current user time
 
     return now - start  # Return elapsed time
-    # print(str(lock_time) + " ms passed")
 
 
 app = Flask(__name__)
