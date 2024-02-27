@@ -1,24 +1,8 @@
 import subprocess
 import sys
 
-
-# gcloud container clusters create cluster-1 --zone=northamerica-northeast1-a --machine-type=c2-standard-8 --num-nodes=1
-def create_cluster(cluster_name, zone, machine_type, num_nodes):
-    command = ['gcloud', 'container', 'clusters', 'create', cluster_name]
-    command.extend(['--zone', zone])
-    command.extend(['--machine-type', machine_type])
-    command.extend(['--num-nodes', str(num_nodes)])
-
-    subprocess.run(command)
-
-
-# gcloud container clusters delete cluster-1 --zone=northamerica-northeast1-a
-def delete_cluster(cluster_name, zone):
-    command = ['gcloud', 'container', 'clusters', 'delete', cluster_name]
-    command.extend(['--zone', zone])
-    command.extend(['--quiet']) # To avoid "Do you want to continue (Y/n)?"
-
-    subprocess.run(command)
+webapp_location = '../webapps/busy-waiting-webapp/'
+zipkin_location = '../zipkin/'
 
 
 # kubectl apply -f filename.yaml
@@ -28,22 +12,21 @@ def kubectl_apply(filename):
     subprocess.run(command)
 
 
-def run_kubectl():
+def deploy_app(folder_location):
     # kubectl apply -f deployment.yaml
-    kubectl_apply('deployment.yaml')
+    kubectl_apply(folder_location + 'deployment.yaml')
     # kubectl apply -f service.yaml
-    kubectl_apply('service.yaml')
+    kubectl_apply(folder_location + 'service.yaml')
 
-def deploy_zipkin():
-    # kubectl apply -f deployment.yaml
-    kubectl_apply('../zipkin/zipkin-deployment.yaml')
-    # kubectl apply -f service.yaml
-    kubectl_apply('../zipkin/zipkin-service.yaml')
+
+def usage_message():
+    print("Usage: gcloud_script.py  [new/dep/del]")
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: gcloud_script.py  [new/kub/del]")
+        print("Invalid number of arguments")
+        usage_message()
         exit(1)
 
     action = sys.argv[1]
@@ -54,17 +37,25 @@ if __name__ == '__main__':
     cluster_name = "cluster-1"
     num_nodes = 1
 
-    if action == "new":
-        # Create the cluster
-        create_cluster(cluster_name, zone, machine_type, num_nodes)
-    elif action == "del":
-        # Delete the cluster
-        delete_cluster(cluster_name, zone)
-    elif action == "kub":
+    if action == "new":  # Create the cluster
+        # gcloud container clusters create cluster-1 --zone=northamerica-northeast1-a
+        # --machine-type=c2-standard-8 --num-nodes=1
+        command = ['gcloud', 'container', 'clusters', 'create', cluster_name]
+        command.extend(['--zone', zone])
+        command.extend(['--machine-type', machine_type])
+        command.extend(['--num-nodes', str(num_nodes)])
+        subprocess.run(command)
+    elif action == "dep":
         # Deploy the webapp, run the service
-        run_kubectl()
-        deploy_zipkin()
+        deploy_app(webapp_location)
+        deploy_app(zipkin_location)
+    elif action == "del":  # Delete the cluster
+        # gcloud container clusters delete cluster-1 --zone=northamerica-northeast1-a
+        command = ['gcloud', 'container', 'clusters', 'delete', cluster_name]
+        command.extend(['--zone', zone])
+        command.extend(['--quiet'])  # To avoid "Do you want to continue (Y/n)?"
+        subprocess.run(command)
     else:
         print("Invalid action:", action)
-        print("Usage: gcloud_script.py  [new/kub/del]")
+        usage_message()
         exit(1)
