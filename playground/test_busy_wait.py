@@ -16,14 +16,23 @@ def busy_wait(lock_time):
     return now - start  # Return elapsed time
 
 
-desired_lock_time = 100  # ms
+mean_values = []
+desired_lock_times = []
 
-bw_outputs = []
-for _ in range(100):
-    output = busy_wait(desired_lock_time)
-    bw_outputs.append(output)
+for i in range(100):
+    desired_lock_times.append(np.random.exponential(100))  # ms
 
-mean_value = np.mean(bw_outputs)
+    bw_outputs = []
+    for _ in range(100):
+        output = busy_wait(desired_lock_times[i])
+        bw_outputs.append(output)
 
-print(f"Mean waiting time: {mean_value} ms")
-print(f"Min waiting time: {desired_lock_time} ms")
+    mean_values.append(np.mean(bw_outputs))
+
+    print(f"Mean waiting time {i}: {mean_values[i]} ms")
+    print(f"Desired waiting time {i}: {desired_lock_times[i]} ms")
+
+print(f"Total mean waiting time: {np.mean(mean_values)}")
+print(f"Total mean desired waiting time: {np.mean(desired_lock_times)}")
+
+print(f"Ratio = {np.mean(mean_values) / np.mean(desired_lock_times) * 100} %")
