@@ -1,5 +1,6 @@
 import csv
 import requests
+import subprocess
 
 
 def export_traces_to_csv(zipkin_ip, limit, csv_file):
@@ -36,3 +37,18 @@ def export_traces_to_csv(zipkin_ip, limit, csv_file):
                 writer.writerow(csv_row)
 
     print(f"Saved traces to {csv_file}")
+
+
+def run_subprocess(cmd):
+    result = subprocess.run(cmd, capture_output=True, text=True)  # TODO vedi subprocess.call
+    # Check if the command was successful
+    if result.returncode == 0:
+        print(result.stdout)
+    else:
+        print("Command failed.")
+        print("Error:\n", result.stderr)
+    return result
+
+
+# subprocess.DEVNULL
+# subprocess.run(["ls"], stderr=subprocess.STDOUT, check=True, timeout=60)
