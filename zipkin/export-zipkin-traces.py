@@ -65,9 +65,10 @@ def kolmogorov_smirnov(data):
     print(f"KS test statistic: {ks_stat}, p-value: {ks_p_value}")
 
 
-# Export traces to CSV file<
+# Export traces to CSV file
 out_file = "./traces/zipkin_traces.csv"
-export_traces_to_csv("http://34.152.3.248", 100, out_file)
+zipkin_ip = "http://localhost"  # http://34.152.37.184
+export_traces_to_csv(zipkin_ip, 10000, out_file)
 
 # Calculate average latency
 df = pd.read_csv(out_file)
