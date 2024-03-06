@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment # To allow multiple pods
+metadata:
+  name: custom-metrics-app
+spec:
+  replicas: 1 # Number of pods to run
+  selector:
+    matchLabels:
+      app: custom-metrics-app
+  template:
+    metadata:
+      labels:
+        app: custom-metrics-app
+    spec:
+      containers:
+      - name: custom-metrics-app-container
+        image: rpizziol/custom-metrics-app:0.02
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "1000m" # Recommended to use the m notation
+          limits:
+            memory: "128Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 5001
+

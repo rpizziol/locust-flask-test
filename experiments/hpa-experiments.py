@@ -9,8 +9,8 @@ ssh_instance = f"{ssh_username}@{instance_name}"
 zone_name = "northamerica-northeast1-a"
 
 # Experiment parameters
-max_time = 10  # minutes
-n_users = 10
+max_time = 5  # minutes
+n_users = 1
 
 # Restart zipkin
 # print("Restarting Zipkin...")

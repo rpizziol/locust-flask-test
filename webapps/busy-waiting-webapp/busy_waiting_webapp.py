@@ -18,10 +18,8 @@ def get_current_time_in_ms():
 def busy_wait(lock_time):
     start = get_current_time_in_ms()  # Start user time
     now = get_current_time_in_ms()  # Current user time
-
     while now - start < lock_time:
         now = get_current_time_in_ms()  # Update current user time
-
     return now - start  # Return elapsed time
 
 
