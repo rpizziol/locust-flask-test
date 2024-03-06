@@ -51,6 +51,21 @@ pip install -r requirements.txt
    ./gcloud/close.sh
    ```
   
+
+## HPA
+To enable the Horizontal Pod Autoscaler, run:
+
+```
+kubectl autoscale deployment busy-waiting-webapp --cpu-percent=50 --min=1 --max=100
+```
+
+To check if it worked properly:
+
+```
+kubectl get hpa
+```
+
+
 ### To Do
 * Edit the Locust file with the assigned host url in step 1
 

@@ -18,7 +18,7 @@ spec:
         resources:
           requests:
             memory: "64Mi"
-            cpu: "1000m" # Recommen500mded to use the m notation
+            cpu: "1000m" # Recommended to use the m notation
           limits:
             memory: "128Mi"
             cpu: "1000m"

@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     # Default values
     zone = "northamerica-northeast1-a"
-    machine_type = "c2-standard-8"
+    machine_type = "c2-standard-16"
     cluster_name = "cluster-1"
     num_nodes = 1
 
