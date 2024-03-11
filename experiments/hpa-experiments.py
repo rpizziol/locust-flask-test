@@ -10,7 +10,7 @@ zone_name = "northamerica-northeast1-a"
 
 # Experiment parameters
 max_time = 5  # minutes
-n_users = 1
+n_users = 10
 
 # Restart zipkin
 # print("Restarting Zipkin...")

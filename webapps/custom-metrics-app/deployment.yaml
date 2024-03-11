@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: custom-metrics-app-container
-        image: rpizziol/custom-metrics-app:0.02
+        image: rpizziol/custom-metrics-app:0.03
         imagePullPolicy: Always
         resources:
           requests:
