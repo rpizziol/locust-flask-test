@@ -1,16 +1,22 @@
 # Locust-Flask Test
 
-A Toy application to learn how to use **Locust**, **Flask**, **Google Cloud** and **Kubernetes**.
+A Toy application to learn how to use **Google Cloud**,  **Kubernetes**, and **Locust**.
 
 ## Project Structure
 
 The structure of this project is the following:
 
-* `gcloud`: a series of scripts and `.yaml` files used to automatically initialize the Kubernetes cluster, deploy a web application and delete the cluster.
+* `experiments`: scripts to run experiments and experimental data (`data`).
+
+* `gcloud`: a series of scripts to automatically initialize the Kubernetes cluster, deploy a web application and delete the cluster.
 
 * `locust`: the `locustfile.py` used to swarm the webapp with users.
 
-* `webapps`: some example *Flask* webapps and a `Dockerfile` that can be used for this project. The current version of the project uses [simpleapp](https://hub.docker.com/r/bistrulli/simpleapp).
+* `playground`: a folder with scripts to test features and methods. Will be deleted in the final version of the project.
+
+* `webapps`: some example *Flask* webapps and a `Dockerfile` that can be used for this project. The current version of the project uses [custom-metrics-app](https://hub.docker.com/r/rpizziol/custom-metrics-app).
+
+* `zipkin`: `.yaml` files to deploy a Zipkin server and a script to export the traces from the exposed Zipkin web application. To be deleted.
 
 ### Dependencies
 
@@ -30,13 +36,13 @@ pip install -r requirements.txt
    ```
    This should output also the host url. If not, run manually:
    ```
-   kubectl get service simpleapp-service
+   kubectl get service <app-service-name>
    ```
    
 2. Check the endpoint assigned by GoogleCloud (the `LoadBalancer Ingress:` of the following command):
 
    ```
-   kubectl describe services deployedapp-service
+   kubectl describe services <app-service-name>
    ```
 
 3. Edit `locust/locustfile.py` to change the host url obtained in step 2 (E.g., `host = "http://34.118.161.222:5001"` ) and run the script `run_locust.sh`:
@@ -45,7 +51,7 @@ pip install -r requirements.txt
    ./locust/run_locust.sh <SwarmRate> <MaxUsers>
    ```
   
-4. Kill the kubernetes cluster with the script (don't forget to press Enter to continue):
+4. Kill the kubernetes cluster with the script:
 
    ```
    ./gcloud/close.sh
@@ -64,10 +70,6 @@ To check if it worked properly:
 ```
 kubectl get hpa
 ```
-
-
-### To Do
-* Edit the Locust file with the assigned host url in step 1
 
 ## Authors
 
