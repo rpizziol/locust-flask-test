@@ -58,18 +58,6 @@ pip install -r requirements.txt
    ```
   
 
-## HPA
-To enable the Horizontal Pod Autoscaler, run:
-
-```
-kubectl autoscale deployment busy-waiting-webapp --cpu-percent=50 --min=1 --max=100
-```
-
-To check if it worked properly:
-
-```
-kubectl get hpa
-```
 
 ## Authors
 

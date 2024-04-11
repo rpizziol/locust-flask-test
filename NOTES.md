@@ -52,17 +52,42 @@ apt install iputils-ping
 ```
 
 ## Horizontal scaling
-Check current number of replicas of the `busy-waiting-webapp` deployment:
-
+Get the list of deployments:
 ```
-kubectl get deployment busy-waiting-webapp -o jsonpath='{.spec.replicas}'
-```
-
-Change number of replicas of the `busy-waiting-webapp` deployment:
-```
-kubectl scale deployment busy-waiting-webapp --replicas=2
+kubectl get deployments
 ```
 
+Check current number of replicas of the `<deployment-name>` (in the example `spring-test-app-tier1`) deployment:
+
+```
+kubectl get deployment spring-test-app-tier1 -o jsonpath='{.spec.replicas}'
+```
+
+Change number of replicas of the `spring-test-app-tier1` deployment:
+```
+kubectl scale deployment spring-test-app-tier1 --replicas=2
+```
+
+
+### HPA
+To enable the Horizontal Pod Autoscaler, run:
+
+```
+kubectl autoscale deployment spring-test-app-tier1 --cpu-percent=50 --min=1 --max=100
+```
+
+To check if it worked properly:
+
+```
+kubectl get hpa
+```
+
+## Compute Engine
+To download the files from a compute engine `instance-1`:
+
+```
+gcloud compute scp --recurse roberto_pizziol@instance-1:/home/roberto_pizziol/source/folder/path /destination/folder/path
+```
 
 # Random notes
 ```
