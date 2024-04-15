@@ -1,8 +1,11 @@
 from locust import LoadTestShape
+import subprocess
+import math
+import numpy as np
 from scipy.io import loadmat
 
 
-class TraceShape(LoadTestShape):
+class traceShape(LoadTestShape):
     lastStage = None
     mod = None
     shift = None
@@ -10,7 +13,7 @@ class TraceShape(LoadTestShape):
     traceFile = None
     data = None
 
-    def __init__(self, mod=400, shift=10, duration=600, traceFile="trace.mat"):
+    def __init__(self, mod=200, shift=10, duration=300, traceFile="trace.mat"):
         super().__init__()
         self.mod = mod
         self.shift = shift
@@ -27,7 +30,7 @@ class TraceShape(LoadTestShape):
     def tick(self):
         run_time = self.get_run_time()
         if run_time <= self.duration:
-            if int(run_time) % 60 == 0:
+            if (int(run_time) % 60 == 0):
                 self.users = (self.f(int(run_time)), 1)
             return self.users
         return None
