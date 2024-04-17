@@ -22,18 +22,19 @@ def reformat_time(old_time):
 # reformat_csv('./data/20240409_5min_u2/u2/SpringTestApp_3Tier_-_RPS.csv', 'rps')
 
 
-for n_users in range(8, 34, 2):
-    experiment_name = "u" + str(n_users)
-    folder_names = ['SpringTestApp_3Tier_-_CPU_Usage', 'SpringTestApp_3Tier_-_RPS',
-                    'SpringTestApp_3Tier_-_Cores_per_replica']  # 'SpringTestApp_3Tier_-_Response_Time',
+# for n_users in range(8, 34, 2):
+#     experiment_name = "u" + str(n_users)
+folder_names = ['SpringTestApp_3Tier_-_CPU_Usage', 'SpringTestApp_3Tier_-_RPS',
+                'SpringTestApp_3Tier_-_Cores_per_replica']  # 'SpringTestApp_3Tier_-_Response_Time',
 
-    for folder_name in folder_names:
-        folder_path = f"./data/20240410_20min_u8-32/{experiment_name}/{folder_name}"
-        print(folder_path)
-        pattern = "*.csv"
-        files = glob.glob(f"{folder_path}/{pattern}")
-        for file in files:
-            reformat_csv(file, folder_name)
+for folder_name in folder_names:
+    # folder_path = f"./data/20240410_20min_u8-32/{experiment_name}/{folder_name}"
+    folder_path = f"./data/20240415-2/{folder_name}"
+    print(folder_path)
+    pattern = "*.csv"
+    files = glob.glob(f"{folder_path}/{pattern}")
+    for file in files:
+        reformat_csv(file, folder_name)
 
     # in_path = folder_path + "/SpringTestApp_3Tier_-_CPU_Usage_1.csv"
 # out_path = experiment_folder + "u2_CPU_Usage/u2_CPU_Usage_1.csv"

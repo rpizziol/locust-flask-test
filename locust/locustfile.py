@@ -9,6 +9,16 @@ class MyUser(HttpUser):
 
     @task
     def index_page(self):
+        st = time.time()
         think_time = np.random.exponential(1000)  # in ms
         time.sleep(think_time / 1000)  # in s
         self.client.get("/")
+        rt = time.time() - st
+        fd = open("time.csv", mode='a')
+        fd.write(f"{rt}\n")
+        fd.close()
+
+
+import numpy as np
+a = np.loadtxt("time.csv")
+print(np.mean(a))

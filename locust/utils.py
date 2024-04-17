@@ -3,6 +3,7 @@ import csv
 import math
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def convert_mat_to_csv(in_path, out_path):
@@ -24,7 +25,7 @@ def generate_sin_csv(filename, min_value, max_value, phase_shift, frequency, num
     for i in range(num_entries):
         x = i / (num_entries - 1)  # Normalize x-axis values between 0 and 1
         y = amplitude * math.sin(2 * math.pi * frequency * x + phase_shift) + vertical_shift
-        data.append([y])  # Store x and y values in a list
+        data.append([int(y)])  # Store x and y values in a list
 
     # Open a CSV file for writing
     with open(filename, 'w', newline='') as csvfile:
@@ -38,7 +39,7 @@ def plot_csv(filename):
 
     # Plotting
     plt.figure(figsize=(10, 6))  # Optional: Adjusts the figure size
-    plt.plot(data, marker='o', linestyle='-', color='b')  # Line plot
+    plt.step(np.linspace(1,200,200), data, marker='o', linestyle='-', color='b')  # Line plot
 
     plt.title(filename)  # Optional: Adds a title to the plot
     plt.xlabel('Time')  # Optional: Adds a label to the x-axis

@@ -1,6 +1,8 @@
 import csv
 from locust import LoadTestShape
 import pandas as pd
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 
 class TraceShape(LoadTestShape):
@@ -11,7 +13,7 @@ class TraceShape(LoadTestShape):
     traceFile = None
     data = None
 
-    def __init__(self, mod=400, shift=10, duration=600, traceFile="./workloads/trace.csv"):
+    def __init__(self, mod=160, shift=10, duration=300, traceFile="./workloads/sin160.csv"):
         super().__init__()
         self.mod = mod
         self.shift = shift
@@ -27,9 +29,10 @@ class TraceShape(LoadTestShape):
     def tick(self):
         run_time = self.get_run_time()
         if run_time <= self.duration:
-            if int(run_time) % 20 == 0:  # Update number of users every 20 secs
-                self.users = (self.f(int(run_time)), 1)
-                self.save_users(self.users)
+            if int(run_time) % 1 == 0:  # Update number of users every 1 secs
+                users_value = self.f(run_time)
+                self.users = (users_value, 1)
+                self.save_users(users_value)
             return self.users
         return None
 
@@ -37,7 +40,13 @@ class TraceShape(LoadTestShape):
         return self.data[int(x) % self.maxIndex]
 
     def save_users(self, users):
-        with open("./workload.csv", mode='a', newline='') as file:
+        with open("./workload_sin900.csv", mode='a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([users])
-            print(f"Saved users: {users}")
+            now = self.get_current_time_iso()
+            writer.writerow([now, users])
+            print(f"{now} Saved users: {users}")
+
+    def get_current_time_iso(self):
+        current_time = datetime.now(ZoneInfo('Etc/GMT-2'))
+        formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S%z')
+        return formatted_time
