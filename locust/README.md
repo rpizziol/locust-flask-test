@@ -10,24 +10,3 @@ gcloud compute instances create instance-1 \
 
 And it should be already up and running.
 
-Check if the machine is running:
-```
-gcloud compute instances list --project=my-microservice-test-project
-```
-
-To connect by SSH:
-```
-gcloud compute ssh instance-1 --project=my-microservice-test-project --zone=northamerica-northeast1-a
-```
-
-
-To stop the compute engine:
-```
-gcloud compute instances stop instance-1 --project=my-microservice-test-project --zone=northamerica-northeast1-a
-```
-
-To start it again:
-
-```
-gcloud compute instances start instance-1 --project=my-microservice-test-project --zone=northamerica-northeast1-a
-```
