@@ -25,6 +25,11 @@ spec:
           limits:
             memory: "1Gi"
             cpu: "1000m"
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
         ports:
         - containerPort: 80
 #        env:
