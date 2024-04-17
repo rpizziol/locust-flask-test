@@ -68,6 +68,10 @@ Change number of replicas of the `spring-test-app-tier1` deployment:
 kubectl scale deployment spring-test-app-tier1 --replicas=2
 ```
 
+```
+for i in {1..3}; do kubectl scale deployment "spring-test-app-tier$i" --replicas=10; done
+```
+
 
 ### HPA
 To enable the Horizontal Pod Autoscaler, run:
@@ -82,12 +86,26 @@ To check if it worked properly:
 kubectl get hpa
 ```
 
+To delete all the HPA:
+
+```
+for i in {1..3}; do kubectl delete hpa "spring-test-app-tier$i"; done
+```
+
 ## Compute Engine
 To download the files from a compute engine `instance-1`:
 
 ```
 gcloud compute scp --recurse roberto_pizziol@instance-1:/home/roberto_pizziol/source/folder/path /destination/folder/path
 ```
+
+To access via terminal the compute engine `instance-1`:
+
+```
+gcloud compute ssh --zone "northamerica-northeast1-a" "roberto_pizziol@instance-1" --project "my-microservice-test-project"
+```
+
+
 
 # Random notes
 ```
