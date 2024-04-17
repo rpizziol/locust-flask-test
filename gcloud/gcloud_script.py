@@ -33,9 +33,10 @@ if __name__ == '__main__':
 
     # Default values
     zone = "northamerica-northeast1-a"
+    # machine_type = "c2-standard-30"
     machine_type = "c2-standard-16"
     cluster_name = "cluster-1"
-    num_nodes = 1
+    num_nodes = 3
 
     if action == "new":  # Create the cluster
         # gcloud container clusters create cluster-1 --zone=northamerica-northeast1-a
