@@ -1,6 +1,8 @@
-# import csv
 from locust import LoadTestShape
 import pandas as pd
+
+
+# import csv
 # from datetime import datetime, timezone
 # from zoneinfo import ZoneInfo
 
@@ -13,7 +15,7 @@ class TraceShape(LoadTestShape):
     traceFile = None
     data = None
 
-    def __init__(self, mod=70, shift=10, duration=400, traceFile="./workloads/sin_80-10_p200_tot2000.csv"):
+    def __init__(self, mod=70, shift=10, duration=600, traceFile="./workloads/sin160.csv"):
         super().__init__()
         self.mod = mod
         self.shift = shift
@@ -31,8 +33,8 @@ class TraceShape(LoadTestShape):
         if run_time <= self.duration:
             if int(run_time) % 1 == 0:  # Update number of users every 1 sec
                 users_value = self.f(run_time)
-                self.users = (users_value, 1000)
-                # self.save_users(users_value) # Save users in a csv
+                self.users = (users_value, 1)
+                # self.save_users(users_value)
             return self.users
         return None
 
