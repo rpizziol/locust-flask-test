@@ -9,8 +9,8 @@ spec:
     app: spring-test-app
     tier: tier2
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
   type: LoadBalancer
 

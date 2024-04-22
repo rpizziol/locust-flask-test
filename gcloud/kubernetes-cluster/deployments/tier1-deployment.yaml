@@ -15,23 +15,23 @@ spec:
         tier: tier1
     spec:
       containers:
-      - name: spring-test-app-tier1-container
-        image: rpizziol/spring-test-app-tier1:0.20
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "1000m" # Recommended to use the m notation
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-        env:
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-        ports:
-        - containerPort: 80
+        - name: spring-test-app-tier1-container
+          image: rpizziol/spring-test-app-tier1:0.20
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1000m" # Recommended to use the m notation
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 80
 #        env:
 #          - name: TIER_2_SERVICE_URL
 #            value: "http://spring-test-app-tier2:80"
