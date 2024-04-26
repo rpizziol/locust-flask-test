@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: spring-test-app-tier1
+  name: spring-test-app-tier3
   namespace: default  # Specify your namespace here if different
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: spring-test-app-tier1
+    name: spring-test-app-tier3
   minReplicas: 1
   maxReplicas: 100
   metrics:
