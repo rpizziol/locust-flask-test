@@ -1,5 +1,7 @@
 import math
 import csv
+import pandas as pd
+from matplotlib import pyplot as plt
 
 
 def generate_sin(filename, min_value, max_value, phase_shift, period, num_entries):
@@ -21,4 +23,19 @@ def generate_sin(filename, min_value, max_value, phase_shift, period, num_entrie
         csv_writer.writerows(data)  # Write data points
 
 
-generate_sin('sin_80-10_p200_tot2000.csv', 10, 80, 0, 200, 2000)
+def plot_workload(filename):
+    data = pd.read_csv(filename)
+    plt.plot(data)
+    plt.title(filename)
+    plt.show()
+
+
+# generate_sin('sin_80-10_p200_tot2000.csv', 10, 80, 0, 200, 2000)
+
+file1 = 'sin_p400.csv'
+generate_sin(file1, 10, 80, 0, 400, 2000)
+plot_workload(file1)
+
+file2 = 'sin_p800.csv'
+generate_sin(file2, 10, 80, 0, 800, 2000)
+plot_workload(file2)

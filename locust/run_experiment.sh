@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source locustenv/bin/activate
+# source locustenv/bin/activate
 
 current_date=$(date +%Y%m%d)
 host_url="http://35.203.10.69:80"

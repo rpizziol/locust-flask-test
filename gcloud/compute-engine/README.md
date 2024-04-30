@@ -2,7 +2,8 @@
 
 ## Starting, stopping and checking status
 
-1. To check if the machine is running, visualize the **list of instances** of the project `my-microservice-test-project`:
+1. To check if the machine is running, visualize the **list of instances** of the
+   project `my-microservice-test-project`:
 
     ```
     gcloud compute instances list --project=my-microservice-test-project
@@ -14,7 +15,8 @@
     gcloud compute instances stop instance-1 --project=my-microservice-test-project --zone=northamerica-northeast1-a
     ```
 
-3. To **start the compute engine** `instance-1` (remember, when creating a Compute Engine, it should already be up and running):
+3. To **start the compute engine** `instance-1` (remember, when creating a Compute Engine, it should already be up and
+   running):
 
     ```
     gcloud compute instances start instance-1 --project=my-microservice-test-project --zone=northamerica-northeast1-a
@@ -39,4 +41,11 @@
    ```
    gcloud compute scp --recurse roberto_pizziol@instance-1:/home/roberto_pizziol/<remote-source-path> <local-destination-path>
    ```
+
+4. To enable kubectl on the compute engine you may need to run this:
+
+   ```
+   gcloud container clusters get-credentials cluster-1 --region=northamerica-northeast1-a
+   ```
+
 
