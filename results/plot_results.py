@@ -21,6 +21,7 @@ def plot_csv(filename, index, outfile, label):
     plt.savefig(outfile)
     plt.legend()
     plt.show()
+    plt.close()
     return column.mean()
 
 
@@ -72,20 +73,20 @@ def plot_csv(filename, index, outfile, label):
 # plt.savefig('muOpt-w30_vs_HPA_1000s_thinktime1s.pdf')
 # plt.show()
 
-def compare_2autoscalers(filename1, filename2, label1, label2, index):
+def compare_2autoscalers(filename1, filename2, label1, label2, index, experiment):
     column1 = prepare_for_group_plot(filename1, index, label1)
     column2 = prepare_for_group_plot(filename2, index, label2)
     plt.title(f"{index} vs Time")
     plt.xlabel('Time')
     plt.ylabel(index)
     plt.legend()
-    plt.savefig(f"./pdfs/{index.replace('/', '')}_{label1}_vs_{label2}.pdf")
+    plt.savefig(f"./pdfs/{experiment}_{index.replace('/', '')}_{label1}_vs_{label2}.pdf")
     plt.show()
     print(f"Mean {index}")
     print(f"{label1} = {round(column1.mean(), 2)}")
     print(f"{label2} = {round(column2.mean(), 2)}")
-    ratio = (round(column2.mean()/column1.mean(), 2)-1) * 100
-    print(f"Ratio = {label2} vs {label1}: +{ratio}%")
+    ratio = (round(column2.mean() / column1.mean(), 2) - 1) * 100
+    print(f"Ratio = {label2} vs {label1}: {ratio}%")
 
 
 def compare_3autoscalers(filename1, filename2, filename3, label1, label2, label3, index, outfile):
@@ -103,6 +104,13 @@ def compare_3autoscalers(filename1, filename2, filename3, label1, label2, label3
     print(f"{label1} = {round(column1.mean(), 2)}")
     print(f"{label2} = {round(column2.mean(), 2)}")
     print(f"{label3} = {round(column3.mean(), 2)}")
+
+
+def compare_2autoscalers_3aspects(as1_locust, as1_replicas, as1_usage, as2_locust, as2_replicas, as2_usage, as1_label,
+                                  as2_label, experiment):
+    compare_2autoscalers(as1_locust, as2_locust, as1_label, as2_label, 'Requests/s', experiment)
+    compare_2autoscalers(as1_replicas, as2_replicas, as1_label, as2_label, 'Replicas', experiment)
+    compare_2autoscalers(as1_usage, as2_usage, as1_label, as2_label, 'Usage', experiment)
 
 
 #
@@ -231,12 +239,64 @@ def compare_3autoscalers(filename1, filename2, filename3, label1, label2, label3
 # muopt_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240423/muopt-15min/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
 
 
-hpa_stats_history = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/hpa-sin_p400-30min/hpa-sin_p400-30min_stats_history.csv'
-muopt_stats_history = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/muopt-w30-sin_p400-30min/muopt-w30-sin_p400-30min_stats_history.csv'
+# hpa_stats_history = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/hpa-sin_p400-30min/hpa-sin_p400-30min_stats_history.csv'
+# muopt_stats_history = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/muopt-w30-sin_p400-30min/muopt-w30-sin_p400-30min_stats_history.csv'
+#
+# compare_2autoscalers(muopt_stats_history, hpa_stats_history, 'muOpt', 'HPA', 'Requests/s')
+#
+# muopt_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/muopt-w30-sin_p400-30min/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# hpa_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/hpa-sin_p400-30min/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+#
+# compare_2autoscalers(muopt_replicas, hpa_replicas, 'muOpt', 'HPA', 'Replicas')
+#
+# day = '20240430'
+#
+# # muopt_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w30-sin400-36m/muopt-w30-sin400-36m_stats_history.csv'
+# # muopt_usermax_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-sin400-36m/muopt-w15s-usermax-sin400-36m_stats_history.csv'
+#
+# muopt_usermax_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-monitor2-sin400-36m/muopt-w15s-usermax-monitor2-sin400-36m_stats_history.csv'
+# hpa_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/hpa-sin400-36m/hpa-sin400-36m_stats_history.csv'
+#
+# compare_2autoscalers(muopt_usermax_locust, hpa_locust, 'muOpt 15s (usermax) monitor 2s', 'HPA', 'Requests/s', day)
+#
+# # muopt_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w30-sin400-36m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# # muopt_usermax_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-sin400-36m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# muopt_usermax_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-monitor2-sin400-36m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# hpa_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/hpa-sin400-36m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+#
+# compare_2autoscalers(muopt_usermax_replicas, hpa_replicas, 'muOpt 15s (usermax) monitor 2s', 'HPA', 'Replicas', day)
+#
+# # muopt_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-sin400-36m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+# muopt_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/muopt-w15s-usermax-monitor2-sin400-36m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+# hpa_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240430/hpa-sin400-36m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+#
+# compare_2autoscalers(muopt_usage, hpa_usage, 'muOpt 15s (usermax) monitor 2s', 'HPA', 'Usage', day)
 
-compare_2autoscalers(muopt_stats_history, hpa_stats_history, 'muOpt', 'HPA', 'Requests/s')
+day = '20240502'
 
-muopt_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/muopt-w30-sin_p400-30min/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
-hpa_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240429/hpa-sin_p400-30min/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# hpa_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u20-15m/hpa-u20-15m_stats_history.csv'
+# hpa_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u20-15m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# hpa_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u20-15m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+#
+# muopt_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u20-15m/muopt-u20-15m_stats_history.csv'
+# muopt_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u20-15m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+# muopt_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u20-15m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+#
+# compare_2autoscalers_3aspects(muopt_locust, muopt_replicas, muopt_usage, hpa_locust, hpa_replicas, hpa_usage, 'muOpt',
+#                               'HPA', day)
 
-compare_2autoscalers(muopt_replicas, hpa_replicas, 'muOpt', 'HPA', 'Replicas')
+
+hpa_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u10-10m/hpa-u10-10m_stats_history.csv'
+hpa_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u10-10m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+hpa_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/hpa-u10-10m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+
+muopt_locust = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u10-10m/muopt-u10-10m_stats_history.csv'
+muopt_replicas = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u10-10m/SpringTestApp_3Tier_-_Replicas/SpringTestApp_3Tier_-_Replicas_4.csv'
+muopt_usage = '/home/robb/PycharmProjects/locust-flask-test/results/20240502/muopt-u10-10m/SpringTestApp_3Tier_-_CPU_Usage/SpringTestApp_3Tier_-_CPU_Usage_4.csv'
+
+experiment = f'{day}_u10-10m'
+
+compare_2autoscalers_3aspects(muopt_locust, muopt_replicas, muopt_usage, hpa_locust, hpa_replicas, hpa_usage, 'muOpt',
+                              'HPA', experiment)
+
+

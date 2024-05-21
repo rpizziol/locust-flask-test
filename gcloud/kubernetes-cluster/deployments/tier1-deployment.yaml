@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: spring-test-app-tier1-container
-          image: rpizziol/spring-test-app-tier1:0.23
+          image: rpizziol/spring-test-app-tier1:0.27
           imagePullPolicy: Always
           resources:
             requests:
@@ -24,7 +24,7 @@ spec:
               cpu: "1000m" # Recommended to use the m notation
             limits:
               memory: "1Gi"
-              cpu: "1000m"
+              cpu: "16000m"
           env:
             - name: POD_NAME
               valueFrom:
@@ -32,7 +32,23 @@ spec:
                   fieldPath: metadata.name
           ports:
             - containerPort: 80
-#        env:
-#          - name: TIER_2_SERVICE_URL
-#            value: "http://spring-test-app-tier2:80"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 0 # Immediate probes
+            periodSeconds: 20
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "pkill", "-15", "-f", "k8testpod" ]
 

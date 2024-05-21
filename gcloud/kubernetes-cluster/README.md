@@ -39,7 +39,7 @@
     ```
     Useful command to do it for the 3-tier example application.
     ```
-    for i in {1..3}; do kubectl scale deployment "spring-test-app-tier$i" --replicas=2; done
+    for i in {1..3}; do kubectl scale deployment "spring-test-app-tier$i" --replicas=1; done
     ```
 
 ### HPA

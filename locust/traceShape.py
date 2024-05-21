@@ -14,7 +14,7 @@ class TraceShape(LoadTestShape):
     traceFile = None
     data = None
 
-    def __init__(self, mod=70, shift=10, duration=400, traceFile="./workloads/sin160.csv"):
+    def __init__(self, mod=70, shift=10, duration=1800, traceFile="./workloads/sin_p800.csv"):
         super().__init__()
         self.mod = mod
         self.shift = shift
