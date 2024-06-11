@@ -1,10 +1,16 @@
 import os
 import datetime
+import subprocess
 import time
 import argparse
 import redis
 from kubernetes import client, config
 from kubernetes.client import ApiException
+
+
+def save_time(filename, mode):
+    with open(filename, mode) as f:
+        f.write(datetime.datetime.utcnow().isoformat(sep="T", timespec="milliseconds") + "Z\n")
 
 
 def get_cli():
@@ -123,7 +129,7 @@ def reset_conditions():
             scale_pod(pod, f"{deployment_name}-container", 1, 16)
 
 
-def create_experiment_folder(folder_name):
+def create_or_clean_folder(folder_name):
     os.makedirs(folder_name, exist_ok=True)
 
     # Remove all files inside the experiment folder (if it exists)
@@ -133,35 +139,52 @@ def create_experiment_folder(folder_name):
             os.remove(file_path)
 
 
+# Get CLI input parameters
 args = get_cli()
+exp_name = args.name  # e.g. sin200-1h-vpa
+host_url = args.address  # e.g. "http://34.47.0.52"
 
-host_url = args.address  # "http://34.47.0.52"
-exp_name = args.name
+# Get current time, filenames and folders
 current_date = datetime.datetime.now().strftime("%Y%m%d")
 exp_folder = f"./results/{current_date}/{exp_name}"
 time_file = f"{exp_folder}/{exp_name}-time.txt"
+create_or_clean_folder(exp_folder)  # Create the experiment folder (if it doesn't exist)
 
 reset_conditions()
-
 time.sleep(60)  # Wait a minute to settle
-
-# Create the experiment folder (if it doesn't exist)
-create_experiment_folder(exp_folder)
 
 print(f"[Launching experiment {exp_name} with Locust. Results will be stored in the {exp_folder} folder.]")
 
-# Save starting time
-with open(time_file, "w") as f:
-    f.write(datetime.datetime.utcnow().isoformat(sep="T", timespec="milliseconds") + "Z\n")
+# Starting time
+save_time(time_file, "w")
 
-# Run locust
+print("[Beginning of learning phase]")
+# Learning phase
+locust_command = f"locust -f locustfile.py,traceShape.py --headless --csv=\"{exp_folder}/{exp_name}-learning\" --host=\"{host_url}\""
+os.system(locust_command)
+
+print("[End of learning phase]")
+# End learning phase
+save_time(time_file, "a")
+
+# 5 minutes break
+time.sleep(5 * 60)
+save_time(time_file, "a")
+
+# Start enforcer (in parallel)
+print("[Starting enforcing VPA recommendations.]")
+try:
+    enforcer_process = subprocess.Popen(["./muOptK8s/ctrl/run_autoscaler.sh"], stdout=subprocess.DEVNULL)
+except Exception as e:
+    enforcer_process.kill()
+    raise
+
+# Run the real experiment
 locust_command = f"locust -f locustfile.py,traceShape.py --headless --csv=\"{exp_folder}/{exp_name}\" --host=\"{host_url}\""
 os.system(locust_command)
 
+# Ending time
+save_time(time_file, "a")
 print("[Experiment completed!]")
-
-# Save closing time
-with open(time_file, "a") as f:
-    f.write(datetime.datetime.utcnow().isoformat(sep="T", timespec="microseconds") + "Z\n")
 
 reset_conditions()
