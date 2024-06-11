@@ -141,7 +141,7 @@ current_date = datetime.datetime.now().strftime("%Y%m%d")
 exp_folder = f"./results/{current_date}/{exp_name}"
 time_file = f"{exp_folder}/{exp_name}-time.txt"
 
-# reset_conditions()
+reset_conditions()
 
 time.sleep(60)  # Wait a minute to settle
 
@@ -164,7 +164,4 @@ print("[Experiment completed!]")
 with open(time_file, "a") as f:
     f.write(datetime.datetime.utcnow().isoformat(sep="T", timespec="microseconds") + "Z\n")
 
-with open(time_file, "a") as f:
-    f.write(datetime.datetime.utcnow().isoformat(sep="T", timespec="microseconds") + "Z\n")
-
-# reset_conditions()
+reset_conditions()
